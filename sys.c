@@ -14,6 +14,7 @@
 #include <sched.h>
 
 #include <errno.h>
+#include <system.h>
 
 #define LECTURA 0
 #define ESCRIPTURA 1
@@ -71,6 +72,11 @@ int sys_write (int fd, char * buffer, int size){
 	return result;
 	
 }
+
+int gettime(){
+	return zeos_ticks;
+}
+
 
 void sys_exit()
 {  

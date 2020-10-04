@@ -3,17 +3,14 @@
 ENTRY(write)
 	pushl	%ebp
 	movl	%esp,	%ebp
-
 	//move the parameters to ebx, ecx, edx
 	movl	8(%ebp),	%ebx
 	movl	12(%ebp),	%ecx
 	movl	16(%ebp),	%edx
 	movl	$0x04,	%eax	//identifier of the system call (number 4 for write) in the eax register	
-
 	pushl	%ecx
 	pushl	%edx
 	pushl	$return_address
-	
 	//creates a fake dynamic link
 	pushl	%ebp		//points to the top of the user stack and it can be used from the handler in system mode to access any user value easily
 	movl	%esp,	%ebp
@@ -36,5 +33,24 @@ process_result:
 	mov	%eax,	errno	//save the absolute value of the return in a error variable defined in the library as errno
 	mov	$-1,	%eax	//return -1 to the user to notify that the system call has an error
 	//movl	%ebp,	&esp
+	popl	%ebp
+	ret
+
+ENTRY(clock)
+	pushl	%ebp
+	movl	%esp,	%ebp
+	movl	$0x0A,	%eax //identifier of the system call is 10
+	pushl	%ecx
+	pushl	%edx
+	pushl	$return_clock
+	pushl	%ebp
+	movl	%esp,	%ebp
+	sysenter
+
+return_clock:
+	popl 	%ebp
+	addl 	$4, %esp
+	popl 	%edx
+	popl 	%ecx
 	popl	%ebp
 	ret

@@ -5,6 +5,7 @@
 #include <interrupt.h>
 #include <segment.h>
 #include <hardware.h>
+#include <system.h>
 #include <io.h>
 
 #include <zeos_interrupt.h>
@@ -92,6 +93,7 @@ void keyboard_routine(){
 
 //Rutina del rellotge
 void clock_routine(){
+	++zeos_ticks;
 	zeos_show_clock();
 }
 void setIdt()
