@@ -36,7 +36,7 @@ process_result:
 	popl	%ebp
 	ret
 
-ENTRY(clock)
+ENTRY(gettime)
 	pushl	%ebp
 	movl	%esp,	%ebp
 	movl	$0x0A,	%eax //identifier of the system call is 10
